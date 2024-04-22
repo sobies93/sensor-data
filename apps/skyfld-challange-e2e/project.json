@@ -1,0 +1,28 @@
+{
+  "root": "apps/skyfld-challange-e2e",
+  "sourceRoot": "apps/skyfld-challange-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/skyfld-challange-e2e/cypress.json",
+        "devServerTarget": "skyfld-challange:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "skyfld-challange:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/skyfld-challange-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["skyfld-challange"]
+}

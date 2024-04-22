@@ -1,0 +1,74 @@
+{
+  "root": "apps/skyfld-challange",
+  "sourceRoot": "apps/skyfld-challange/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/skyfld-challange",
+        "index": "apps/skyfld-challange/src/index.html",
+        "baseHref": "/",
+        "main": "apps/skyfld-challange/src/main.tsx",
+        "polyfills": "apps/skyfld-challange/src/polyfills.ts",
+        "tsConfig": "apps/skyfld-challange/tsconfig.app.json",
+        "assets": [
+          "apps/skyfld-challange/src/favicon.ico",
+          "apps/skyfld-challange/src/assets"
+        ],
+        "styles": [],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/skyfld-challange/src/environments/environment.ts",
+              "with": "apps/skyfld-challange/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "options": {
+        "buildTarget": "skyfld-challange:build",
+        "hmr": true,
+        "proxyConfig": "apps/skyfld-challange/proxy.conf.json"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "skyfld-challange:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/skyfld-challange/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/skyfld-challange"],
+      "options": {
+        "jestConfig": "apps/skyfld-challange/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
