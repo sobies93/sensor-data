@@ -44,8 +44,8 @@
       "executor": "@nrwl/web:dev-server",
       "options": {
         "buildTarget": "skyfld-challange:build",
-        "hmr": true,
-        "proxyConfig": "apps/skyfld-challange/proxy.conf.json"
+        "proxyConfig": "apps/skyfld-challange/proxy.conf.json",
+        "hmr": true
       },
       "configurations": {
         "production": {
