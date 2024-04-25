@@ -4,6 +4,7 @@
     "api": "apps/api",
     "api-interfaces": "libs/api-interfaces",
     "skyfld-challange": "apps/skyfld-challange",
-    "skyfld-challange-e2e": "apps/skyfld-challange-e2e"
+    "skyfld-challange-e2e": "apps/skyfld-challange-e2e",
+    "validation": "libs/validation"
   }
 }

@@ -10,6 +10,8 @@ export interface SensorData {
 
 // const enum ?
 export enum SensorType {
-  THERMOCOUPLES,
-  THERMISTORS,
+  THERMOCOUPLES = 'THERMOCOUPLES',
+  THERMISTORS = 'THERMISTORS',
 } ;
+
+export type SensorDataRequest = Pick<SensorData, 'type' | 'temperature' | 'humidity'>;

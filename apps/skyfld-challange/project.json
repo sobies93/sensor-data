@@ -16,7 +16,6 @@
         "polyfills": "apps/skyfld-challange/src/polyfills.ts",
         "tsConfig": "apps/skyfld-challange/tsconfig.app.json",
         "assets": [
-          "apps/skyfld-challange/src/favicon.ico",
           "apps/skyfld-challange/src/assets"
         ],
         "styles": [],

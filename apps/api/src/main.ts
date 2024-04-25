@@ -1,7 +1,8 @@
 import * as express from 'express';
 import { v4 as uuidv4 } from 'uuid';
 
-import { SensorData, SensorType } from '@skyfld-demo/api-interfaces';
+import { SensorData, SensorDataRequest, SensorType } from '@skyfld-demo/api-interfaces';
+import { validateHumidity, validateTemperature } from '@skyfld-demo/validation';
 
 const app = express();
 
@@ -36,33 +37,38 @@ const sensorData: SensorData[] = [
   },
 ];
 
-const LENGTH_TO_TRIGGER_SAVING_ERROR = 5;
+// TODO get that from .env
+const LENGTH_TO_TRIGGER_SAVING_ERROR = 6;
 const isProduction = false;
 const GENERIC_ERROR = 'The error has ocurred';
 
-type SensorDataRequest = Pick<SensorData, 'type' | 'temperature' | 'humidity'>;
-
 const getSensorData = () => sensorData; 
 
+// TODO put sensorRouter to separate file
 sensorRouter.get('/', (req, res) => {
-  res.status(200).json(getSensorData());
-})
+  res.json(getSensorData()).status(200);
+});
 
+// TODO put sensorRouter to controller file
 sensorRouter.post('/', (req, res) => {
   const { type, temperature, humidity } = req.body as SensorDataRequest;
 
-  if (!type || !type || temperature) {
-    return res.status(400).json({ error: 'Type and value are required' });
+  if (!humidity || !validateHumidity(humidity)) {
+    return res.json({ error: 'Invalid humidity' }).status(400);
   }
 
-  if (!Object.values(SensorType).includes(type)) {
-    return res.status(400).json({ error: 'Invalid sensor type' });
+  if (!temperature || !validateTemperature(temperature)) {
+    return res.json({ error: 'Invalid temperature' }).status(400);
+  }
+
+  if (!type || !Object.values(SensorType).includes(type)) {
+    return res.json({ error: 'Invalid sensor type' }).status(400);
   }
 
   const id = uuidv4();
   const createdAt = Date.now();
   const updatedAt = Date.now();
-
+  
   const newSensorData: SensorData = {
     id,
     type,
@@ -74,13 +80,14 @@ sensorRouter.post('/', (req, res) => {
 
   try {
     if(sensorData.length + 1 === LENGTH_TO_TRIGGER_SAVING_ERROR) {
-      throw new Error('Unable to save')
+      // throw new Error('Unable to save')
+      return res.status(500).json({error: "Unable to save" });
     }
     sensorData.push(newSensorData);
     res.status(201).json({ message: 'Sensor data stored successfully', data: newSensorData });
   } catch (error) {
-    const message = isProduction ? GENERIC_ERROR : error;
-    res.send(500).json({message });
+    const message = isProduction ? GENERIC_ERROR : error.toString();
+    res.status(500).json({message });
   }
 
 });
