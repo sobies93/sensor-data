@@ -1,13 +1,17 @@
-import { getGreeting } from '../support/app.po';
+describe('Sensor Data', () => {
+  beforeEach(() => {
+    cy.visit('/'); // Assuming the app starts at the root URL
+  });
 
-describe('skyfld-challange', () => {
-  beforeEach(() => cy.visit('/'));
+  it('should add sensor data', () => {
+    cy.get('input[name="temperature"]').type('25');
+    cy.get('input[name="humidity"]').type('50');
 
-  it('should display welcome message', () => {
-    // Custom command example, see `../support/commands.ts` file
-    cy.login('my-email@something.com', 'myPassword');
+    cy.get('button[type="submit"]').click();
 
-    // Function helper example, see `../support/app.po.ts` file
-    getGreeting().contains('Welcome skyfld-challange');
+    cy.contains('Succeed to save sensor data');
+
+    cy.contains('25');
+    cy.contains('50');
   });
 });
