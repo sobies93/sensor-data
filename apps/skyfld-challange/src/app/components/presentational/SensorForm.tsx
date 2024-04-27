@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Grid, MenuItem, TextField, Typography, makeStyles } from '@material-ui/core';
-import { useSensorContext } from '../contexts/SensorDataContext';
-import { SensorDataRequest, SensorType, } from '@skyfld-demo/api-interfaces';
-import { validateHumidity, validateTemperature } from '@skyfld-demo/validation';
-import { RequestState } from '../types';
+import { SensorType } from '@skyfld-demo/api-interfaces';
+import { FormErrors, RequestState } from '../../types';
 
 const useStyles = makeStyles((theme) => ({
     form: {
@@ -11,69 +9,31 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const SensorForm: React.FC = () => {
+interface Props {
+    onSubmit: (formData: any) => void;
+    requestState: RequestState;
+    errors: FormErrors;
+}
+
+const SensorForm: React.FC<Props> = ({ onSubmit, requestState, errors }) => {
     const classes = useStyles();
-    const { saveSensorData, requestState } = useSensorContext();
-
-    const [formData, setFormData] = useState({
+    const initialFormData = {
         type: SensorType.THERMISTORS,
-        temperature: 0,
-        humidity: 0,
-    });
+        temperature: '0',
+        humidity: '0',
+    }
+    const [formData, setFormData] = useState(initialFormData);
 
-    const [errors, setErrors] = useState({
-        temperature: '',
-        humidity: '',
-    });
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [event.target.name]: event.target.value });
     };
 
-
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const { type, temperature, humidity } = formData;
-
-        // Validation
-        const temperatureValid = validateTemperature(temperature);
-        const humidityValid = validateHumidity(humidity);
-
-        if (!temperatureValid) {
-            setErrors((prevErrors) => ({
-                ...prevErrors,
-                temperature: 'Temperature must be above -273 degree',
-            }));
-        }
-
-        if (!humidityValid) {
-            setErrors((prevErrors) => ({
-                ...prevErrors,
-                humidity: 'Humidity must be between 0 and 100',
-            }));
-        }
-
-        if (!humidityValid || !temperatureValid) {
-            return;
-        }
-        setErrors({
-            temperature: '',
-            humidity: '',
-        });
-
-        const newSensorData = {
-            type,
-            temperature: temperature,
-            humidity: humidity,
-        } as SensorDataRequest;
-
-        setFormData({
-            type: SensorType.THERMISTORS,
-            temperature: 0,
-            humidity: 0,
-        })
-
-        saveSensorData(newSensorData);
+        onSubmit(formData);
+        // TODO should clear data only after successful submit
+        setFormData(initialFormData);
     };
 
     return (
@@ -106,7 +66,7 @@ const SensorForm: React.FC = () => {
                             fullWidth
                             label="Temperature"
                             name="temperature"
-                            type='number'
+                            type="number"
                             value={formData.temperature}
                             onChange={handleChange}
                             error={!!errors.temperature}
@@ -117,7 +77,7 @@ const SensorForm: React.FC = () => {
                         <TextField
                             variant="outlined"
                             fullWidth
-                            type='number'
+                            type="number"
                             label="Humidity"
                             name="humidity"
                             value={formData.humidity}
@@ -127,7 +87,7 @@ const SensorForm: React.FC = () => {
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <Button disabled={requestState === RequestState.Loading } type="submit" variant="contained" color="primary">
+                        <Button disabled={requestState === RequestState.Loading} type="submit" variant="contained" color="primary">
                             Add Data
                         </Button>
                     </Grid>

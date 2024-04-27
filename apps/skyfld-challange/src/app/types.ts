@@ -11,3 +11,8 @@ export enum SnackbarLevel {
     Success = 'Success',
 
 }
+
+export interface FormErrors {
+  humidity: string;
+  temperature: string;
+}

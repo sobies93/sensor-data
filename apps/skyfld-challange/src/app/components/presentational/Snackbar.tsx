@@ -1,23 +1,28 @@
 import React from 'react';
 import { Snackbar as MuiSnackbar, SnackbarContent, IconButton } from '@material-ui/core';
 import { Close as CloseIcon } from '@material-ui/icons';
-import { useSensorContext } from '../contexts/SensorDataContext';
 
-const Snackbar: React.FC = () => {
-const { snackbarMessage, snackbarOpen, handleSnackbarClose } = useSensorContext();
+interface Props {
+    snackbarMessage: string;
+    snackbarOpen: boolean;
+    handleSnackbarClose: () => void;
+}
+
+const Snackbar: React.FC<Props> = ({ snackbarMessage, snackbarOpen, handleSnackbarClose }) => {
 
   return (
     <MuiSnackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
-      <SnackbarContent
+        <SnackbarContent
         message={snackbarMessage}
         action={
-          <IconButton size="small" color="inherit" onClick={handleSnackbarClose}>
+            <IconButton size="small" color="inherit" onClick={handleSnackbarClose}>
             <CloseIcon fontSize="small" />
-          </IconButton>
+            </IconButton>
         }
-      />
+        />
     </MuiSnackbar>
   );
 };
 
 export default Snackbar;
+

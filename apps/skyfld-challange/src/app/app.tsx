@@ -1,16 +1,16 @@
 import React from 'react';
-import SensorDashboard from './components/sensorDashboard';
 import { SensorProvider } from './contexts/SensorDataContext';
-import SensorForm from './components/SensorForm';
-import Snackbar from './components/Snackbar';
+import SensorFormContainer from './components/containers/SensorFormContainer';
+import SensorDashboardContainer from './components/containers/SensorDashboardContainer';
+import SnackbarContainer from './components/containers/SnackbarContainer';
 
 
 export const App = () => {
   return (
       <SensorProvider>
-        <SensorDashboard />
-        <SensorForm />
-        <Snackbar />
+        <SensorDashboardContainer />
+        <SensorFormContainer />
+        <SnackbarContainer />
       </SensorProvider>
   );
 };
