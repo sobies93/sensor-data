@@ -4,7 +4,7 @@
 
 This project was generated using [Nx](https://nx.dev).
 
-Project contains simple React app 'skyfld-challange` with store kept via ContextApi and Express app called `api` serving as simple API handling create and read operations on mocked in memory storage. Additional libs holds mocked data, validation and description of api interfaces.
+Project contains simple React app `skyfld-challange` with store kept via ContextApi and Express app called `api` serving as simple API handling create and read operations on mocked in memory storage. Additional libs holds mocked data, validation and description of api interfaces.
 
 UI was created using MuiUI. Refreshing data every 30 seconds is achieved using Web Worker.
 
