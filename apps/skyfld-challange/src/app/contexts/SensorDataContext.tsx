@@ -1,4 +1,4 @@
-// it should be refactored to separate files for better structure and readability, consider using useReducer
+// it should be renamed do StoreContex, content should be refactored to separate files for better structure and readability, consider using useReducer
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { SensorData, SensorDataRequest } from '@skyfld-demo/api-interfaces';
 import { RequestState, SnackbarLevel } from '../types';
