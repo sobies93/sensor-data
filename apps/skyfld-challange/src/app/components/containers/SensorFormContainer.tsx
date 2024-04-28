@@ -7,7 +7,7 @@ import { FormErrors } from '../../types';
 
 const SensorFormContainer: React.FC = () => {
     const { saveSensorData, requestState } = useSensorContext();
-    
+
     const [errors, setErrors] = useState<FormErrors>({
         temperature: '',
         humidity: '',
@@ -15,6 +15,11 @@ const SensorFormContainer: React.FC = () => {
 
     const handleSubmit = async (formData: any) => {
         const { type, temperature, humidity } = formData;
+
+        setErrors({
+            temperature: '',
+            humidity: '',
+        });
 
         // Validation
         const temperatureValid = validateTemperature(temperature);
@@ -35,7 +40,7 @@ const SensorFormContainer: React.FC = () => {
         }
 
         if (!temperatureValid || !humidityValid) {
-            return;
+            return { error: 'Invalid form' };
         }
 
         const newSensorData = {
@@ -47,7 +52,7 @@ const SensorFormContainer: React.FC = () => {
         return await saveSensorData(newSensorData);
     };
 
-    return <SensorForm onSubmit={handleSubmit} requestState={requestState} errors={errors}/>;
+    return <SensorForm onSubmit={handleSubmit} requestState={requestState} errors={errors} />;
 };
 
 export default SensorFormContainer;
