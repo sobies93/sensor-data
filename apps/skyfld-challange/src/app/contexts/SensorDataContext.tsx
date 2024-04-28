@@ -1,3 +1,4 @@
+// it should be refactored to separate files for better structure and readability, consider using useReducer
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { SensorData, SensorDataRequest } from '@skyfld-demo/api-interfaces';
 import { RequestState, SnackbarLevel } from '../types';
@@ -55,12 +56,14 @@ export const SensorProvider: React.FC = ({ children }) => {
       setRequestState(RequestState.Success);
       showMessage('Succeed to save sensor data', SnackbarLevel.Success);
       fetchSensorData();
+      return responseData;
 
     } catch (error: any) {
       const errorMessage = error instanceof Error ? error.message : 'An error occurred'
       setError(errorMessage);
       showMessage(errorMessage, SnackbarLevel.Error);
       setRequestState(RequestState.Error);
+      return {error: errorMessage};
     }
   };
 

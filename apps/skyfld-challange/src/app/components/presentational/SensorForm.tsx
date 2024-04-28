@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface Props {
-    onSubmit: (formData: any) => void;
+    onSubmit: (formData: any) => any;
     requestState: RequestState;
     errors: FormErrors;
 }
@@ -29,11 +29,13 @@ const SensorForm: React.FC<Props> = ({ onSubmit, requestState, errors }) => {
         setFormData({ ...formData, [event.target.name]: event.target.value });
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        onSubmit(formData);
-        // TODO should clear data only after successful submit
-        setFormData(initialFormData);
+        const response = await onSubmit(formData);
+        
+        if(!response.error) {
+            setFormData(initialFormData);
+        }
     };
 
     return (

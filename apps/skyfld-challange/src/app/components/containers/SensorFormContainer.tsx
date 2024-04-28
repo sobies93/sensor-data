@@ -44,7 +44,7 @@ const SensorFormContainer: React.FC = () => {
             humidity: parseFloat(humidity),
         } as SensorDataRequest;
 
-        saveSensorData(newSensorData);
+        return await saveSensorData(newSensorData);
     };
 
     return <SensorForm onSubmit={handleSubmit} requestState={requestState} errors={errors}/>;

@@ -16,11 +16,11 @@ export const createSensorData = (data: SensorDataRequest) => {
   if(sensorData.length >= MAX_SENSOR_DATA_ERROR_EXAMPLE) {
     throw new Error('Unable to save');
   }
-  if (!humidity || !validateHumidity(humidity)) {
+  if (!validateHumidity(humidity)) {
     throw new Error('Invalid humidity');
   }
 
-  if (!temperature || !validateTemperature(temperature)) {
+  if (!validateTemperature(temperature)) {
     throw new Error('Invalid temperature');
   }
 
