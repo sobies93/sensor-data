@@ -1,11 +1,4 @@
-import * as express from 'express';
-import { sensorRouter } from './app/routes/sensorRoutes';
-
-const app = express();
-
-app.use(express.json());
-
-app.use('/api/sensorData', sensorRouter);
+import { app } from "./app/app";
 
 const port = process.env.port || 4000;
 

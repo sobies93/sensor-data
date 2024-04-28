@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@skyfld-demo/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+      "@skyfld-demo/mocked-data": ["libs/mocked-data/src/index.ts"],
       "@skyfld-demo/validation": ["libs/validation/src/index.ts"]
     }
   },

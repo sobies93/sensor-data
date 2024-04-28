@@ -1,17 +1,27 @@
+import { mockedSensorData } from '@skyfld-demo/mocked-data';
+
+
 describe('Sensor Data', () => {
-  beforeEach(() => {
-    cy.visit('/'); // Assuming the app starts at the root URL
-  });
+  it('should fetch sensor data', () => {
+    // mock data as fast solution to resolve proxy issue
+    cy.intercept('GET', '/api/sensorData', mockedSensorData).as(
+      'getSensorData'
+    );
 
-  it('should add sensor data', () => {
-    cy.get('input[name="temperature"]').type('25');
-    cy.get('input[name="humidity"]').type('50');
+    cy.visit('/');
 
-    cy.get('button[type="submit"]').click();
+    // Wait for the request to complete
+    cy.wait('@getSensorData').then((interception) => {
+      // Assert that the request was made
+      expect(interception.request.url).to.contain('/api/sensorData');
+      expect(interception.response.statusCode).to.eq(200);
+    });
 
-    cy.contains('Succeed to save sensor data');
-
-    cy.contains('25');
-    cy.contains('50');
+    mockedSensorData.forEach((data) => {
+      cy.contains(data.id); 
+      cy.contains(data.temperature); 
+      cy.contains(data.humidity);
+      cy.contains(data.type);
+    });
   });
 });

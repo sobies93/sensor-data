@@ -3,6 +3,7 @@
   "projects": {
     "api": "apps/api",
     "api-interfaces": "libs/api-interfaces",
+    "mocked-data": "libs/mocked-data",
     "skyfld-challange": "apps/skyfld-challange",
     "skyfld-challange-e2e": "apps/skyfld-challange-e2e",
     "validation": "libs/validation"
