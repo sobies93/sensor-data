@@ -33,7 +33,7 @@ const SensorForm: React.FC<Props> = ({ onSubmit, requestState, errors }) => {
         e.preventDefault();
         const response = await onSubmit(formData);
         
-        if(!response.error) {
+        if(response && !response.error) {
             setFormData(initialFormData);
         }
     };

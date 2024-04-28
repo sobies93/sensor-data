@@ -5,4 +5,3 @@ export const sensorRouter = express.Router();
 
 sensorRouter.get('/', getSensorData);
 sensorRouter.post('/', addSensorData);
-
